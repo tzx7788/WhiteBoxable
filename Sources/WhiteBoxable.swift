@@ -7,7 +7,7 @@ public protocol WhiteBoxable {
     func value(input: UInt8) -> [UInt8]
 }
 
-func cfunc<T: WhiteBoxable>(name: String, whitebox: T) -> String {
+public func cfunc<T: WhiteBoxable>(name: String, whitebox: T) -> String {
     var result = "static void \(name)(uint8_t input, uint8_t* output) {\n"
     result.append("\(cVariable(name: "data", whitebox: whitebox))\n")
     result.append("\tmemcpy(output, data + input * \(whitebox.outputLength), \(whitebox.outputLength));")
@@ -15,7 +15,7 @@ func cfunc<T: WhiteBoxable>(name: String, whitebox: T) -> String {
     return result
 }
 
-func cVariable<T: WhiteBoxable>(name: String, whitebox: T) -> String {
+public func cVariable<T: WhiteBoxable>(name: String, whitebox: T) -> String {
     var result = "uint8_t \(name)[]={\n"
     for index in 0...UInt8.max {
         result = result + "/* \(String(format: "0x%02x", index)) */\t"
