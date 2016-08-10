@@ -4,6 +4,7 @@ import XCTest
 
 struct XorTable: WhiteBoxable {
     let outputLength: Int = 1
+    let name = "aaa"
     func value(input: UInt8) -> [UInt8] {
         let a = ( input >> 4 ) & 0xf
         let b = input & 0xf
@@ -14,7 +15,7 @@ struct XorTable: WhiteBoxable {
 class WhiteBoxableTests: XCTestCase {
     func testExample() {
         let xorTable = XorTable()
-        print(cfunc(name: "aaa", whitebox: xorTable))
+        print(cfunc(whitebox: xorTable))
     }
 
 
