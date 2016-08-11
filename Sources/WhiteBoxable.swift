@@ -17,7 +17,7 @@ public func cfunc<T: WhiteBoxable>(whitebox: T) -> String {
 }
 
 public func cVariable< T: WhiteBoxable>(name n: String? = nil,whitebox: T) -> String {
-    let name = n == nil ? whitebox.name : n
+    let name: String = n == nil ? whitebox.name : n!
     var result = "uint8_t \(name)[]={\n"
     for index in 0...UInt8.max {
         result = result + "/* \(String(format: "0x%02x", index)) */\t"
