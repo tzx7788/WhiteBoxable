@@ -10,14 +10,14 @@ public protocol WhiteBoxable {
 public func cfunc<T: WhiteBoxable>(whitebox: T) -> String {
     let name = whitebox.name
     var result = "static void \(name)(uint8_t input, uint8_t* output) {\n"
-    result.append("\(cVariable( whitebox: whitebox))\n")
+    result.append("\(cVariable(name:"data", whitebox: whitebox))\n")
     result.append("\tmemcpy(output, data + input * \(whitebox.outputLength), \(whitebox.outputLength));")
     result.append("\n}")
     return result
 }
 
-public func cVariable<T: WhiteBoxable>(whitebox: T) -> String {
-    let name = whitebox.name
+public func cVariable< T: WhiteBoxable>(name n: String? = nil,whitebox: T) -> String {
+    let name = n == nil ? whitebox.name : n
     var result = "uint8_t \(name)[]={\n"
     for index in 0...UInt8.max {
         result = result + "/* \(String(format: "0x%02x", index)) */\t"
